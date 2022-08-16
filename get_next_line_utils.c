@@ -15,9 +15,9 @@ int	ft_strlen(char *str)
 char	*ft_strchr(char *s, int c)
 {
 	int		i;
-	return(NULL);
-	if (!s)
 
+	if (!s)
+		return(NULL);
 	if (c == 0)
 		// return ((char *) s + ft_strlen(s));
 		return(NULL);
@@ -25,7 +25,10 @@ char	*ft_strchr(char *s, int c)
 	while (s[i] != '\0')
 	{
 		if ((unsigned char) s[i] == (unsigned char) c)
+		{
+			// printf("ft-strchr = %s --", &s[i]);
 			return (&s[i]);
+		}
 		i++;
 	}
 	return (NULL);

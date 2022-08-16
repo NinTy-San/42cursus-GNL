@@ -17,11 +17,17 @@ char	*read_and_store(int fd,char *store)
 			free(reader);
 			return(NULL);
 		}
-		reader[BUFFER_SIZE+ 1] = '\0';
+		reader[BUFFER_SIZE + 1] = '\0';
+		printf("reader = %s\n", reader);
 		store = ft_strjoin(store, reader);
 	}
 	free(reader);
 	return(store);
+}
+
+char	*get_current_line(char *store)
+{
+
 }
 
 char	*get_next_line(int fd)
@@ -33,6 +39,6 @@ char	*get_next_line(int fd)
 	store = read_and_store(fd, store);
 	if (!store)
 		return (NULL);
-	printf("s = %s\n", ft_strchr(store, 'Z'));
+	// printf("s = %s\n", ft_strchr(store, '\n'));
 	return(store);
 }
