@@ -2,9 +2,20 @@
 
 int main()
 {
-	int		fd;
-	char	*test;
-	fd = open("text.txt", O_RDONLY);
-	test = get_next_line(fd);
-	printf("resultat = %s\n", test);
+	int		fd = open("text.txt", O_RDONLY);
+	char	*line;
+
+	int i = 0;
+	while(i < 15)
+	{
+		line = get_next_line(fd);
+		// if (!line)
+		// 	break;
+		printf("%s", line);
+		free(line);
+		line = 0;
+		i++;
+	}
+	close(fd);
+	return 0;
 }
