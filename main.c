@@ -2,18 +2,18 @@
 
 int main()
 {
-	int		fd = open("text.txt", O_RDONLY);
+	int		fd = open("files/empty", O_RDONLY);
 	char	*line;
 
 	int i = 0;
-	while(i < 15)
+	while(i < 2)
 	{
 		line = get_next_line(fd);
 		// if (!line)
 		// 	break;
 		printf("%s", line);
-		free(line);
-		line = 0;
+		// free(line);
+		// line = 0;
 		i++;
 	}
 	close(fd);
