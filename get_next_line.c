@@ -5,14 +5,14 @@ char	*read_and_store(int fd,char *store)
 	char	*reader;
 	int		res;
 
-	reader = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	reader = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if(!reader)
 		return (NULL);
 	res = 1;
 	while (res > 0 && !ft_strchr(store, '\n'))
 	{
 		res = read(fd, reader, BUFFER_SIZE);
-		if(res == -1)
+		if(res <= 0)
 		{
 			free(reader);
 			return(NULL);
@@ -36,7 +36,12 @@ char	*get_current_line(char *store)
 	i = 0;
 	while (store[i] && store[i] != '\n')
 		i++;
+	if (store[i] == '\n')
+		i++;
 	line = (char *)malloc(sizeof(char) * i + 1);
+	if (!line)
+		return (NULL);
+	i--;
 	j = 0;
 	while(j <= i)
 	{
@@ -57,6 +62,7 @@ char *get_new_store(char *store)
 
 	i = 0;
 	len = ft_strlen(store);
+
 	while (store[i] && store[i] != '\n')
 		i++;
 	if(!(len - i))
@@ -81,12 +87,17 @@ char	*get_next_line(int fd)
 	static char	*store;
 	char	*line;
 
-	if (fd <= 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return (NULL);
 	store = read_and_store(fd, store);
 	if (!store)
 		return (NULL);
 	line = get_current_line(store);
+	if (!line)
+		return (NULL);
 	store = get_new_store(store);
+	if (!store ||store[0] == '\0')
+		return (NULL);
+
 	return(line);
 }
