@@ -9,11 +9,7 @@ int main()
 	while(i < 15)
 	{
 		line = get_next_line(fd);
-		// if (!line)
-		// 	break;
 		printf("%s", line);
-		// free(line);
-		// line = 0;
 		i++;
 	}
 	close(fd);

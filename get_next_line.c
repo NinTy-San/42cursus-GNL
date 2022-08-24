@@ -17,7 +17,7 @@ char	*read_and_store(int fd,char *store)
 			free(reader);
 			return(NULL);
 		}
-		reader[BUFFER_SIZE + 1] = '\0';
+		reader[res] = '\0';
 		// printf("reader = %s\n", reader);
 		if (res == 0)
 			break;
@@ -67,7 +67,7 @@ char *get_new_store(char *store)
 		i++;
 	if(!(len - i))
 		return(NULL);
-	new_store = malloc(sizeof(char) * (len - i));
+	new_store = malloc(sizeof(char) * (len - i) +1);
 	if (!new_store)
 		return (NULL);
 	j = 0;
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (NULL);
 	store = get_new_store(store);
-	if (!store ||store[0] == '\0')
+	if (!store)
 		return (NULL);
 
 	return(line);
