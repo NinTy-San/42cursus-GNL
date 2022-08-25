@@ -10,6 +10,7 @@ int main()
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
+		free(line);
 		i++;
 	}
 	close(fd);
