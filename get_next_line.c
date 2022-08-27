@@ -23,7 +23,8 @@ char	*read_and_store(int fd,char *store)
 		if (res == 0)
 			break;
 		tmp = ft_strjoin(store, reader);
-		free(store);
+		// if (store[0])
+		// 	free(store);
 		store = tmp;
 	}
 	free(reader);
@@ -90,7 +91,7 @@ char *get_new_store(char *store)
 
 char	*get_next_line(int fd)
 {
-	static char	*store;
+	static char	*store = NULL;
 	char	*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
