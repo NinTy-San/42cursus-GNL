@@ -3,7 +3,7 @@
 char	*read_and_store(int fd,char *store)
 {
 	char	*reader;
-	char	*tmp;
+	// char	*tmp;
 	int		res;
 
 	reader = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
@@ -22,10 +22,10 @@ char	*read_and_store(int fd,char *store)
 		// printf("reader = %s\n", reader);
 		if (res == 0)
 			break;
-		tmp = ft_strjoin(store, reader);
+		store = ft_strjoin(store, reader);
 		// if (store[0])
-		// 	free(store);
-		store = tmp;
+			// free(store);
+		// store = tmp;
 	}
 	free(reader);
 	return(store);
@@ -83,9 +83,9 @@ char *get_new_store(char *store)
 		j++;
 	}
 	new_store[j] = '\0';
-	free (store);
+	// free (store);
 	store = new_store;
-	free(new_store);
+	// free(new_store);
 	return (store);
 }
 
