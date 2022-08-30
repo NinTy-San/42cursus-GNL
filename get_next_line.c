@@ -66,14 +66,14 @@ char *get_new_store(char *store)
 
 	i = 0;
 	len = ft_strlen(store);
-
+	new_store = ft_strdup(store);
 	while (store[i] && store[i] != '\n')
 		i++;
 	if(!(len - i))
 		return(NULL);
-	new_store = malloc(sizeof(char) * (len - i) +1);
-	if (!new_store)
-		return (NULL);
+	// new_store = malloc(sizeof(char) * (len - i) +1);
+	// if (!new_store)
+	// 	return (NULL);
 	j = 0;
 	i++;
 	while (i < len)
@@ -85,25 +85,32 @@ char *get_new_store(char *store)
 	new_store[j] = '\0';
 	// free (store);
 	store = new_store;
-	// free(new_store);
+	free(new_store);
 	return (store);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*store = NULL;
+	char *tmp;
 	char	*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
-		return (NULL);
+			return (NULL);
 	store = read_and_store(fd, store);
 	if (!store)
+	{
+		free(store);
 		return (NULL);
+	}
 	line = get_current_line(store);
 	if (!line)
 		return (NULL);
-	store = get_new_store(store);
-	if (!store)
-		return (NULL);
+	tmp = get_new_store(store);
+	store = ft_strdup(tmp);
+	free(tmp);
+
+	// printf("store = %s", store);
+
 	return(line);
 }

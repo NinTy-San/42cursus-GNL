@@ -60,7 +60,33 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (lens2--)
 		*(newstr + j++) = *(s2 + i++);
 	*(newstr + j) = '\0';
+	// free(s1);
+	// s1 = ft_strdup(newstr);
 	free(s1);
 	return (newstr);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	const char	*sc;
+	char		*dst;
+
+	sc = src;
+	dst = dest;
+	while (n--)
+		*dst++ = *sc++;
+	return (dest);
+}
+
+char	*ft_strdup(char *s)
+{
+	char	*dest;
+	size_t	slen;
+
+	slen = ft_strlen((char *) s);
+	dest = (char *)malloc(sizeof (char) * slen + 1);
+	ft_memcpy(dest, s, slen);
+	dest[slen] = '\0';
+	return (dest);
 }
 

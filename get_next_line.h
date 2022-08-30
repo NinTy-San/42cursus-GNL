@@ -16,6 +16,7 @@ char	*get_new_store(char *store);
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
-
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*ft_strdup(char *s);
 
 #endif
