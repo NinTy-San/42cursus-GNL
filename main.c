@@ -2,7 +2,7 @@
 
 int main()
 {
-	int		fd = open("files/empty", O_RDONLY);
+	int		fd = open("files/41_no_nl", O_RDONLY);
 	char	*line;
 
 	int i = 0;
