@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 14:32:54 by adohou            #+#    #+#             */
+/*   Updated: 2022/09/02 14:46:27 by adohou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 void	*ft_memset(void *s, int c, size_t n)
@@ -14,33 +26,33 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (ptr);
 }
 
-char	*read_and_store(int fd,char *store)
+char	*read_and_store(int fd, char *store)
 {
 	char	*reader;
 	int		res;
 
 	reader = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if(!reader)
+	if (!reader)
 		return (NULL);
 	res = 1;
 	while (res > 0 && !ft_strchr(store, '\n'))
 	{
 		ft_memset(reader, 0, BUFFER_SIZE + 1);
 		res = read(fd, reader, BUFFER_SIZE);
-		if(res <= 0 && !reader[0])
+		if (res <= 0 && !reader[0])
 		{
 			free(reader);
-			if (!store ||store[0] == 0)
-				return(NULL);
+			if (!store || store[0] == 0)
+				return (NULL);
 			return (store);
 		}
 		reader[res] = '\0';
 		if (res == 0)
-			break;
+			break ;
 		store = ft_strjoin(store, reader);
 	}
 	free(reader);
-	return(store);
+	return (store);
 }
 
 char	*get_current_line(char *store)
@@ -59,17 +71,16 @@ char	*get_current_line(char *store)
 		return (NULL);
 	i--;
 	j = 0;
-	while(j <= i)
+	while (j <= i)
 	{
 		line[j] = store[j];
 		j++;
 	}
-	// line[i] = '\n';
 	line[++i] = '\0';
-	return(line);
+	return (line);
 }
 
-char *get_new_store(char *store)
+char	*get_new_store(char *store)
 {
 	char	*new_store;
 	int		len;
@@ -78,16 +89,14 @@ char *get_new_store(char *store)
 
 	i = 0;
 	len = ft_strlen(store);
-	// new_store = ft_strdup(store);
 	while (store[i] && store[i] != '\n')
 		i++;
 	if (store[i] == '\n')
 		i++;
-	new_store = malloc(sizeof(char) * (len - i) +1);
+	new_store = malloc(sizeof(char) * (len - i) + 1);
 	if (!new_store)
 		return (NULL);
 	j = 0;
-	// i++;
 	while (i < len)
 	{
 		new_store[j] = store[i];
@@ -95,8 +104,6 @@ char *get_new_store(char *store)
 		j++;
 	}
 	new_store[j] = '\0';
-	// free (store);
-	// store = new_store;
 	free(store);
 	return (new_store);
 }
@@ -104,12 +111,12 @@ char *get_new_store(char *store)
 char	*get_next_line(int fd)
 {
 	static char	*store;
-	char *tmp;
-	char	*line;
+	char		*tmp;
+	char		*line;
 
 	tmp = store;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
-			return (NULL);
+		return (NULL);
 	tmp = read_and_store(fd, tmp);
 	if (!tmp)
 		return (NULL);
@@ -118,9 +125,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	tmp = get_new_store(tmp);
 	store = tmp;
-	// free(tmp);
-
-	// printf("store = %s", store);
-
-	return(line);
+	return (line);
 }

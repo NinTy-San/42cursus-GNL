@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 14:33:08 by adohou            #+#    #+#             */
+/*   Updated: 2022/09/02 14:37:33 by adohou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 int	ft_strlen(char *str)
@@ -9,7 +21,7 @@ int	ft_strlen(char *str)
 		return (0);
 	while (str[len])
 		len++;
-	return(len);
+	return (len);
 }
 
 char	*ft_strchr(char *s, int c)
@@ -17,10 +29,9 @@ char	*ft_strchr(char *s, int c)
 	int		i;
 
 	if (!s)
-		return(NULL);
+		return (NULL);
 	if (c == '\0')
 		return ((char *) s + ft_strlen(s));
-		// return(NULL);
 	i = 0;
 	while (s[i] != '\0')
 	{
@@ -60,8 +71,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (lens2--)
 		*(newstr + j++) = *(s2 + i++);
 	*(newstr + j) = '\0';
-	// free(s1);
-	// s1 = ft_strdup(newstr);
 	free(s1);
 	return (newstr);
 }
@@ -89,4 +98,3 @@ char	*ft_strdup(char *s)
 	dest[slen] = '\0';
 	return (dest);
 }
-
