@@ -6,7 +6,7 @@
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:33:08 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/05 14:44:10 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/05 18:00:40 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
+void	*ft_memset(void *s, int c, size_t n)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = (char *) s;
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (i < n)
+		ptr[i++] = c;
+	return (ptr);
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
@@ -68,28 +82,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	*(newstr + j) = '\0';
 	free(s1);
 	return (newstr);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	const char	*sc;
-	char		*dst;
-
-	sc = src;
-	dst = dest;
-	while (n--)
-		*dst++ = *sc++;
-	return (dest);
-}
-
-char	*ft_strdup(char *s)
-{
-	char	*dest;
-	size_t	slen;
-
-	slen = ft_strlen((char *) s);
-	dest = (char *)malloc(sizeof (char) * slen + 1);
-	ft_memcpy(dest, s, slen);
-	dest[slen] = '\0';
-	return (dest);
 }
