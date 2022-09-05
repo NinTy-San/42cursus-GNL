@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:54 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/05 15:26:05 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/05 15:05:31 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_current_line(char *store)
 		line[j] = store[j];
 		j++;
 	}
-	line[j] = '\0';
+	line[++i] = '\0';
 	return (line);
 }
 
@@ -105,16 +105,16 @@ char	*get_new_store(char *store)
 
 char	*get_next_line(int fd)
 {
-	static char	*store;
+	static char	*store[8000];
 	char		*tmp;
 	char		*line;
 
-	if (!store)
+	if (!store[fd])
 	{
-		store = (char *)malloc(sizeof(char) * 1);
-		store[0] = '\0';
+		store[fd] = (char *)malloc(sizeof(char) * 1);
+		store[fd][0] = '\0';
 	}
-	tmp = store;
+	tmp = store[fd];
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return (NULL);
 	tmp = read_and_store(fd, tmp);
@@ -123,10 +123,7 @@ char	*get_next_line(int fd)
 	line = get_current_line(tmp);
 	if (!line)
 		return (NULL);
-
-	// if (store[0] != '\0')
-	// 	free(store);
-	store = get_new_store(tmp);
+	store[fd] = get_new_store(tmp);
 	free(tmp);
 	return (line);
 }
