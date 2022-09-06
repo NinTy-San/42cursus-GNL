@@ -6,7 +6,7 @@
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:54 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/06 20:43:12 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/06 22:12:32 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ static char	*get_new_store(char *store)
 
 char	*get_next_line(int fd)
 {
-	static char	*store[8000];
+	static char	*store[FOPEN_MAX];
 	char		*tmp;
 	char		*line;
 
-	tmp = store[fd];
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return (NULL);
+	tmp = store[fd];
 	tmp = read_and_store(fd, tmp);
 	if (!tmp)
 		return (NULL);
