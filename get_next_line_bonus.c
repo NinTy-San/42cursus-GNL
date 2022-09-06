@@ -6,11 +6,11 @@
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:32:54 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/05 19:17:04 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/06 20:43:12 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_free(char *reader, char *store)
 {

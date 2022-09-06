@@ -6,11 +6,11 @@
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:33:08 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/05 19:15:51 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/06 20:11:22 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(char *str)
 {
