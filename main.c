@@ -2,11 +2,11 @@
 
 int main()
 {
-	int		fd = open("files/text", O_RDONLY);
+	int		fd = open("files/nl", O_RDONLY);
 	char	*line;
 
 	int i = 0;
-	while(i < 14)
+	while(i < 3)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);

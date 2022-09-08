@@ -12,47 +12,56 @@
 
 #include "get_next_line.h"
 
-char	*ft_free(char *reader)
+static char	*get_mcopy(char * s)
 {
-	free(reader);
-	if (!store || store[0] == 0)
-	{
-		free(store);
+	char	*cpy;
+	int		len;
+	int		i;
+	len = ft_strlen(s);
+	cpy = (char*)malloc(sizeof(char) * len + 1);
+	if (!cpy)
 		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		cpy[i] = s[i];
+		i++;
 	}
-	return (NULL);
+	cpy[i] = '\0';
+	return (cpy);
 }
 
-static char	*read_and_store(int fd, char *store)
+static char	*read_and_store(int fd, char *buffer)
 {
-	char	*reader;
+	char	*store;
 	int		res;
 
-	reader = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!reader)
-		return (NULL);
+	store = get_mcopy(buffer);
 	if (!store)
-	{
-		store = (char *)malloc(sizeof(char) * 1);
-		store[0] = '\0';
-	}
+		return (NULL);
+	ft_memset(buffer, 0, BUFFER_SIZE - 1);
 	res = 1;
-	while (res != 0 && !ft_strchr(store, '\n'))
+	while (res > 0 && !ft_strchr(buffer, '\n'))
 	{
-		ft_memset(reader, 0, BUFFER_SIZE + 1);
-		res = read(fd, reader, BUFFER_SIZE);
-		if (res <= 0 && !reader[0])
-			return (ft_free(reader));
-		reader[res] = '\0';
-		if (res == 0)
-			break ;
-		store = ft_strjoin(store, reader);
+		res = read(fd, buffer, BUFFER_SIZE);
+		if (res == -1)
+		{
+			free(store);
+			return (NULL);
+		}
+		buffer[res] = '\0';
+		if (res == 0 && !store[0])
+		{
+			free(store);
+			return(NULL);
+		}
+		store = ft_strjoin(store, buffer);
 	}
-	free(reader);
+
 	return (store);
 }
 
-static char	*get_current_line(char *store)
+char	*get_current_line(char *store)
 {
 	char	*line;
 	int		i;
@@ -63,9 +72,7 @@ static char	*get_current_line(char *store)
 		i++;
 	if (store[i] == '\n')
 		i++;
-	line = (char *)malloc(sizeof(char) * i + 1);
-	if (!line)
-		return (NULL);
+	line = (char*)malloc(sizeof(char) * i + 1);
 	i--;
 	j = 0;
 	while (j <= i)
@@ -77,54 +84,38 @@ static char	*get_current_line(char *store)
 	return (line);
 }
 
-static char	*get_new_store(char *store)
+void	get_new_buffer(char *store, char *buffer)
 {
-	char	*new_store;
-	int		len;
 	int		i;
 	int		j;
 
+	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	i = 0;
+	while (store[i] && store[i] != '\n')
+		i++;
+	if (store[i] == '\n')
+		i++;
 	j = 0;
-	len = ft_strlen(store);
-	// if (store[i] == '\n')
-	// 	i++;
-	// else
-		while (store[i] && store[i] != '\n')
-			i++;
-	if (!store[i])
-	{
-		free(store);
-		return (NULL);
-	}
-	new_store = malloc(sizeof(char) * (len - i + 1));
-	if (!new_store)
-		return (NULL);
 	while (store[i])
-		new_store[j++] = store[i++];
-	new_store[j] = '\0';
-	free(store);
-	return (new_store);
+		buffer[j++] = store[i++];
+	buffer[j] = '\0';
+	// return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*store;
-	// char		*tmp;
-	char		*line;
+	static char	buffer[BUFFER_SIZE + 1];
+	char	*line;
+	char	*store;
 
-	// tmp = store;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) == -1)
 		return (NULL);
-	store = read_and_store(fd, store);
+	store = read_and_store(fd, buffer);
 	if (!store)
 		return (NULL);
 	line = get_current_line(store);
-	if (!line)
-		return (NULL);
-	store = get_new_store(store);
-	if (!store)
-		return (NULL);
-	// free(tmp);
+	get_new_buffer(store , buffer);
+	free(store);
+
 	return (line);
 }
