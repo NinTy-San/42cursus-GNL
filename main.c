@@ -1,8 +1,8 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int main()
 {
-	int		fd = open("files/nl", O_RDONLY);
+	int		fd = open("files/41_with_nl", O_RDONLY);
 	char	*line;
 
 	int i = 0;

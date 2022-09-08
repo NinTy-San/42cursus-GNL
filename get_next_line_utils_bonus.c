@@ -6,7 +6,7 @@
 /*   By: adohou <adohou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:33:08 by adohou            #+#    #+#             */
-/*   Updated: 2022/09/06 20:11:22 by adohou           ###   ########.fr       */
+/*   Updated: 2022/09/08 17:09:17 by adohou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	*ft_memset(void *s, int c, size_t n)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
-	size_t	lens1;
-	size_t	lens2;
-	size_t	i;
-	size_t	j;
+	int		lens1;
+	int		lens2;
+	int		i;
+	int		j;
 
 	if (!s1 || !s2)
 		return (NULL);
